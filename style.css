@@ -1,0 +1,320 @@
+@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500');
+* {
+	padding: 0; margin: 0;
+}
+body {
+	background-color: #eee;
+	font-family: 'Roboto', sans-serif;
+	cursor: url(cursor.png) 18 18, auto;
+	overflow: hidden;
+	user-select: none;
+}
+canvas {
+	background: #eee;
+	display: block;
+	margin: 0 auto;
+}
+
+/* ---------------------------- Menü ---------------------------- */
+
+.hauptmenu {
+	display: block;
+	position: absolute;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	opacity: 1;
+	visibility: visible;
+	transition: all 0.9s ease-out;
+}
+
+.hauptmenu-fadeOut {
+	top: -100%;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.ingame {
+	display: block;
+	position: absolute;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.6s ease-out;
+}
+
+.ingame-fadeIn {
+	opacity: 1;
+	visibility: visible;
+}
+
+.gameovermenu {
+	display: block;
+	position: absolute;
+	top: 0%;
+	width: 100%;
+	height: 100%;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.6s ease-out;
+}
+
+.gameovermenu-fadeIn {
+	opacity: 1;
+	visibility: visible;
+}
+
+.specialmenu {
+	display: block;
+	opacity: 0;
+	visibility: hidden;
+	transition: all 0.6s ease-out;
+}
+
+.specialmenu-fadeIn {
+	opacity: 1;
+	visibility: visible;
+}
+
+/* ---------------------------- Button Reihe ---------------------------- */
+
+.button-row {
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: center;
+	align-items: center;
+	width: 100%;
+	align-content: center; /*optional -> lines*/
+	position: absolute;
+	top: 67%;
+}
+
+/* ---------------------------- Button Elemente ---------------------------- */
+
+.button-row div {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 200px;
+	height: 60px;
+	background-color: #0095DD;
+	margin: 0px 20px;
+	box-shadow: 0px 0px 4px 4px #0095DD;
+	border-radius: 1px;
+	transition: all 0.6s ease-out;
+}
+.button-row div p {
+	color: #fff;
+	font-size: 30px;
+}
+
+.button-row div:hover {
+	background-color: #4682b4;
+	box-shadow: 0px 0px 4px 4px #4682b4;
+	transform: scale(1.1);
+}
+
+/* ---------------------------- InGame winns ---------------------------- */
+
+.multiplayerDiv {
+	position: absolute;
+	bottom: 20px;
+	display: flex;
+	flex-flow: row nowrap;
+	justify-content: space-around;
+	align-items: center;
+	width: 80%;
+	left: 0;
+	right: 0;
+	margin: auto;
+}
+
+.multiplayerDiv div:first-of-type .svgBall {
+	transform: rotate(30deg);
+}
+
+.multiplayerDiv div:last-of-type .svgBall { /* display none ist im Weg */
+	transform: rotate(-30deg);
+}
+
+.rotateLeft {
+	transform: rotate(-30deg);
+}
+
+.feld {
+	display: flex;
+	flex-flow: column nowrap;
+	justify-content: center;
+	align-items: center;
+}
+
+.svgBall {
+	width: 70px;
+	height: 70px;
+	margin-top: 12px;
+	margin-bottom: 6px;
+}
+
+.name {
+	color: #333;
+	font-size: 26px;
+	font-weight: 300;
+}
+
+.winns {
+	color: #555;
+	font-size: 34px;
+	font-weight: 400;
+}
+
+/* ---------------------------- Logo ---------------------------- */
+
+#logo {
+	width: 220px;
+	height: 220px;
+	position: absolute;
+	top: 12%;
+	left: 0;
+	right: 0;
+	margin: auto;
+	animation: drehung 22s linear infinite;
+	/*transform-origin: 50% 50%;*/
+}
+
+@keyframes drehung {
+	0% {
+		transform: rotate(0);
+	}
+	100% {
+		transform: rotate(360deg);
+	}
+}
+
+/* ---------------------------- Game Over Back Button ---------------------------- */
+
+.buttonBack {
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 80px;
+	height: 42px;
+	background-color: #0095DD;
+	margin: 20px 20px;
+	border-radius: 2px;
+	position: absolute;
+	top: 0%;
+	transition: all 0.6s ease-out;
+}
+
+.buttonBack p {
+	color: #fff;
+	font-size: 20px;
+	font-weight: 400;
+}
+
+.buttonBack:hover {
+	background-color: #4682b4;
+	transform: scale(1.1);
+}
+
+/* ---------------------------- Texte ---------------------------- */
+
+.texte-row h1 {
+	position: absolute;
+	left: 0;
+	right: 0;
+	margin: auto;
+	text-align: center;
+	transition: font-size 3s ease-out;
+}
+
+.text1 {
+	top: 42%;
+	font-size: 50px;
+	font-weight: 500;
+	color: rgb(0, 149, 221);
+}
+.text1:hover {
+	font-size: 54px;
+}
+
+.text2 {
+	top: 52%;
+	font-size: 30px;
+	font-weight: 300;
+	color: rgb(68, 68, 68);
+}
+.text2:hover {
+	font-size: 34px;
+}
+
+.text3 {
+	top: 78%;
+	font-size: 32px;
+	font-weight: 100;
+	color: rgb(51, 51, 51);
+}
+.text3:hover {
+	font-size: 34px;
+}
+
+/* ---------------------------- HighScore & Winner - Game Over ---------------------------- */
+
+.textHighScore {
+	top: 17%;
+	font-size: 36px;
+	font-weight: 500;
+	color: #555;
+	opacity: 0;
+	visibility: hidden;
+}
+
+.textHighScore-fadeIn {
+	opacity: 1;
+	visibility: visible;
+	animation: pulsieren 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite; /*ease-in-out*/
+}
+.textHighScore-bottom {
+	top: 63%;
+	font-size: 30px;
+	animation: pulsieren 4s cubic-bezier(0.45, 0.05, 0.55, 0.95) infinite 2s;
+}
+
+@keyframes pulsieren {
+	0% {
+		transform: scale(1);
+	}
+	50% {
+		transform: scale(1.5);
+	}
+	100% {
+		transform: scale(1);
+	}
+}
+
+/* ---------------------------- Punkte InGame ---------------------------- */
+
+.punktzahlDiv {
+	position: absolute;
+	top: 0%;
+	right: 0%;
+	padding: 16px 30px;
+}
+
+.punktzahlDiv p {
+	color: rgb(51, 51, 51);
+	text-align: right;
+}
+
+.points {
+	font-size: 30px;
+	font-weight: 400;
+	margin-bottom: 8px;
+}
+
+.highScore {
+	font-size: 24px;
+	font-weight: 300;
+}

@@ -1,0 +1,144 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta charset="utf-8">
+	<title>Dodge - by Conrad</title>
+	<link rel="stylesheet" type="text/css" href="style.css">
+</head>
+<body>
+
+<canvas id="myCanvas" width="480" height="320"></canvas>
+
+<!-- ---------------------------- Hauptmenü ---------------------------- -->
+
+<div id="hauptmenu" class="hauptmenu">
+
+	<div id="logo" class="logo">
+		<svg viewBox="0 0 28.574998 28.574998">
+			<g
+			transform="translate(-26.567031,-73.210891)"
+			id="layer1">
+			<circle
+			r="13.229166"
+			cy="87.49839"
+			cx="40.85453"
+			id="path815"
+			style="fill:#00ffff;fill-opacity:1;stroke:#008080;stroke-width:2.11666656;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99555556" />
+			<circle
+			r="6.6145825"
+			cy="81.333595"
+			cx="40.85453"
+			id="path823"
+			style="fill:#00ffff;fill-opacity:1;stroke:#008080;stroke-width:2.11666656;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99555556" />
+		</g>
+	</svg>
+
+	</div>
+
+	<div id="texte-row" class="texte-row">
+		<h1 id="text1" class="text1">Welcome to Dodge!</h1>
+		<h1 id="text2" class="text2">A Game By Conrad</h1>
+		<h1 id="text3" class="text3">Click one button to play ..</h1>
+	</div>
+
+	<div id="button-row" class="button-row">
+		<div id="button1" class="button1"><p>One Player</p></div>
+		<div id="button2" class="button2"><p>Two Player</p></div>
+		<div id="button3" class="button3"><p>Three Player</p></div>
+	</div>
+
+</div>
+
+<!-- ---------------------------- GameOver Menü ---------------------------- -->
+
+<div id="gameovermenu" class="gameovermenu">
+
+	<div id="texte-row" class="texte-row">
+		<h1 id="text1" class="text1">Game Over</h1>
+		<h1 id="text2" class="text2">You have reached <span id="endPointsSpan"></span> points!</h1>
+		<h1 id="textHighScore" class="textHighScore">New High Score</h1>
+		<h1 id="textNewWinner" class="textHighScore"><span id="textNewWinnerSpan"></span> won the game</h1>
+		<h1 id="text3" class="text3">Click to play again ..</h1>
+	</div>
+
+</div>
+
+<div id="specialmenu" class="specialmenu"> <!-- Punktetabelle usw. kommt hier rein -->
+
+	<div id="buttonBack" class="buttonBack"><p>Back</p></div>
+
+</div>
+
+<!-- ---------------------------- InGame ---------------------------- -->
+
+<div id="ingame" class="ingame">
+
+	<div id="punktzahlDiv" class="punktzahlDiv">
+		<p id="points" class="points"><span id="pointsSpan">0</span> points</p>
+		<p id="highScore" class="highScore">High Score: <span id="highScoreSpan">0</span></p>
+	</div>
+
+	<div id="multiplayerDiv" class="multiplayerDiv">
+
+		<div id="player1" class="feld"> <!-- man könnte diese Container dynamisch per JavaScript hinzufügen -->
+
+			<p class="name"><span id="nameSpan1">Player 1</span></p>
+
+			<div class="svgBall">
+				<svg viewBox="0 0 15.875 15.875">
+					<g transform="translate(-23.056545,-87.223213)" id="layer1">
+						<circle r="7.9375" cy="95.160713" cx="30.994045" id="pathKreis" style="fill:rgba(36, 188, 255, 0.5);fill-opacity:1;stroke:none;stroke-width:0.25371003;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						<circle r="3.8364577" cy="91.456543" cx="30.994045" id="pathInnererKreis" style="fill:none;fill-opacity:1;stroke:#666666;stroke-width:0.79374999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99555556" />
+					</g>
+				</svg>
+			</div>
+
+			<p class="winns"><span id="winnsSpan1">0</span></p>
+
+		</div>
+
+
+		<div id="player2" class="feld">
+
+			<p class="name"><span id="nameSpan2">Player 2</span></p>
+
+			<div id="svgBall2" class="svgBall">
+				<svg viewBox="0 0 15.875 15.875">
+					<g transform="translate(-23.056545,-87.223213)" id="layer1">
+						<circle r="7.9375" cy="95.160713" cx="30.994045" id="pathKreis" style="fill:rgba(79, 222, 54, 0.5);fill-opacity:1;stroke:none;stroke-width:0.25371003;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						<circle r="3.8364577" cy="91.456543" cx="30.994045" id="pathInnererKreis" style="fill:none;fill-opacity:1;stroke:#666666;stroke-width:0.79374999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99555556" />
+					</g>
+				</svg>
+			</div>
+
+			<p class="winns"><span id="winnsSpan2">0</span></p>
+
+		</div>
+
+
+		<div id="player3" class="feld">
+
+			<p class="name"><span id="nameSpan3">Player 3</span></p>
+
+			<div class="svgBall">
+				<svg viewBox="0 0 15.875 15.875">
+					<g transform="translate(-23.056545,-87.223213)" id="layer1">
+						<circle r="7.9375" cy="95.160713" cx="30.994045" id="pathKreis" style="fill:rgba(255, 226, 0, 0.5);fill-opacity:1;stroke:none;stroke-width:0.25371003;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:1" />
+						<circle r="3.8364577" cy="91.456543" cx="30.994045" id="pathInnererKreis" style="fill:none;fill-opacity:1;stroke:#666666;stroke-width:0.79374999;stroke-miterlimit:4;stroke-dasharray:none;stroke-opacity:0.99555556" />
+					</g>
+				</svg>
+			</div>
+
+			<p class="winns"><span id="winnsSpan3">0</span></p>
+
+		</div>
+
+
+	</div>
+
+</div>
+
+<script src="game.js"></script>
+
+</body>
+</html>
