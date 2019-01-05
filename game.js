@@ -25,6 +25,8 @@ const multiplayerDiv = selectID("multiplayerDiv");
 const playerAnzeige = [selectID("player1"), selectID("player2"), selectID("player3")];
 const svgBall2 = selectID("svgBall2");
 
+var proMode = false;
+
 /* ---------------------------- Vollbild etc. ------------------------------- */
 
 document.oncontextmenu = function() {
@@ -377,6 +379,9 @@ class HindernissZeit {
 		this.zahl = 60;
 
 		this.wert = 0;
+		if (proMode === true) {
+			this.zahl = 7;
+		}
 	}
 	zaehlen() { //wird 60x die Sekunde aufgerufen
 		this.timer += 1;
