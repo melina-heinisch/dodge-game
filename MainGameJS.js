@@ -7,8 +7,6 @@ function selectID(elem) {
 const canvas = selectID("myCanvas");
 const ctx = canvas.getContext("2d");
 const button1 = selectID("button1");
-const button2 = selectID("button2");
-const button3 = selectID("button3");
 const buttonBack = selectID("buttonBack");
 const hauptmenu = selectID("hauptmenu");
 const gameovermenu = selectID("gameovermenu");
@@ -23,9 +21,7 @@ const textNewWinner = selectID("textNewWinner");
 const textNewWinnerSpan = selectID("textNewWinnerSpan");
 const multiplayerDiv = selectID("multiplayerDiv");
 const playerAnzeige = [selectID("player1"), selectID("player2"), selectID("player3")];
-const svgBall2 = selectID("svgBall2");
 
-var proMode = false;
 
 /* ---------------------------- Vollbild etc. ------------------------------- */
 
@@ -36,7 +32,7 @@ document.oncontextmenu = function() {
 function resizeCanvas() {
 	canvas.width = window.innerWidth;
 	canvas.height = window.innerHeight;
-	game.startMöglichkeitenFestlegen();
+	game.startMoeglichkeitenFestlegen();
 }
 
 /* ---------------------------- mathematische Formeln ------------------------------- */
@@ -76,8 +72,8 @@ class Size {
 
 /* ---------------------------- Maus ------------------------------- */
 
-var mousePosition = new Position(0, 0);
-var mousePressedDown = false;
+let mousePosition = new Position(0, 0);
+let mousePressedDown = false;
 
 function setMousePosition(e) {
 	mousePosition.x = e.clientX;
@@ -94,73 +90,10 @@ function mouseUp() {
 	mousePressedDown = false;
 }
 
-/* ---------------------------- Tasten ------------------------------- */
 
-var rightPressed = false;
-var leftPressed = false;
-var upPressed = false;
-var downPressed = false;
-var wPressed = false;
-var aPressed = false;
-var sPressed = false;
-var dPressed = false;
+/* ---------------------------- MainGameJS ------------------------------- */
 
-function keyDownHandler(e) {
-	if(e.keyCode == 39) {
-		rightPressed = true;
-	}
-	if(e.keyCode == 37) {
-		leftPressed = true;
-	}
-	if(e.keyCode == 38) {
-		upPressed = true;
-	}
-	if(e.keyCode == 40) {
-		downPressed = true;
-	}
-	if(e.keyCode == 87) {
-		wPressed = true;
-	}
-	if(e.keyCode == 65) {
-		aPressed = true;
-	}
-	if(e.keyCode == 83) {
-		sPressed = true;
-	}
-	if(e.keyCode == 68) {
-		dPressed = true;
-	}
-}
-function keyUpHandler(e) {
-	if(e.keyCode == 39) {
-		rightPressed = false;
-	}
-	if(e.keyCode == 37) {
-		leftPressed = false;
-	}
-	if(e.keyCode == 38) {
-		upPressed = false;
-	}
-	if(e.keyCode == 40) {
-		downPressed = false;
-	}
-	if(e.keyCode == 87) {
-		wPressed = false;
-	}
-	if(e.keyCode == 65) {
-		aPressed = false;
-	}
-	if(e.keyCode == 83) {
-		sPressed = false;
-	}
-	if(e.keyCode == 68) {
-		dPressed = false;
-	}
-}
-
-/* ---------------------------- Game ------------------------------- */
-
-class Game {
+class MainGameJS {
 
 	constructor() {
 		this.ball = []; //Startposition, Geschwindigkeit, ... - wird immer zurückgesetzt
@@ -168,15 +101,14 @@ class Game {
 		this.hindernisse = [];
 		this.farbpalette = ["#24BCFF", "#4FDE36", "#FFE200"];
 		this.startpunkte = [0.3, 0.7, 0.5];
-		this.startMöglichkeiten = [];
+		this.startMoeglichkeiten = [];
 		this.hindernissZeit = new HindernissZeit();
-		this.frame;
 		this.spieler = 0;
 		this.darfHindernisseErstellen = false;
 		this.running = false; //um requestAnimationFrame zu stoppen (+ cancel...)
 		this.buttonFrei = false; //mehrmaliges Drücken eines Buttons wird verhindert
 		this.punktZahl = new PunktZahl;
-		this.zuruecksetzen = false;
+		this.zuruecksetzen = false
 	}
 	laden() {
 		resizeCanvas();
@@ -187,24 +119,24 @@ class Game {
 			console.log(player + " Player");
 			this.punktZahl.points = 0;
 			this.running = true;
-			for (var i = 0; i < player; i++) {
+			for (let i = 0; i < player; i++) {
 				this.ball.push(new Ball(this.startpunkte[i], 0.25, this.farbpalette[i], i));
 			}
 			if (ort === "mainM" || this.zuruecksetzen) {
 				this.zuruecksetzen = false;
 				this.ballMitSpeicher.splice(0, this.ballMitSpeicher.length); //zurücksetzen der BallSpeicher-Werte (da Hauptmenü)
-				for (var i = 0; i < player; i++) {
+				for (let i = 0; i < player; i++) {
 					this.ballMitSpeicher.push(new BallMitSpeicher());
 				}
 			}
 			this.darfHindernisseErstellen = true;
 			this.punktZahl.highScoreRendern();
 
-			for (var i = 0; i < player; i++) {
+			for (let i = 0; i < player; i++) {
 				this.ballMitSpeicher[i].siegeRendern(i);
 			}
 
-			this.inGameRendern(player);
+			this.inGameRendern();
 
 			this.spieler = player;
 			this.loop();
@@ -212,25 +144,13 @@ class Game {
 			ingame.classList.add("ingame-fadeIn");
 		}
 	}
-	inGameRendern(player) {
-		for (var i = 0; i < playerAnzeige.length; i++) { 
+	inGameRendern() {
+		for (let i = 0; i < playerAnzeige.length; i++) {
 			playerAnzeige[i].style.display = "none" //zurücksetzen
 		}
-		if (player < 2) {
-			multiplayerDiv.style.display = "none"; //komplett weg
-		}
-		else {
-			multiplayerDiv.style.display = "flex";
-			for (var i = 0; i < player; i++) {
-				playerAnzeige[i].style.display = "flex"
-			}
-			if (player === 2) {
-				svgBall2.classList.add("rotateLeft"); //keine endgültige Lösung, man muss die Container dynamisch erzeugen, damit :last-child funktioniert
-			}
-			else {
-				svgBall2.classList.remove("rotateLeft");
-			}
-		}
+
+		multiplayerDiv.style.display = "none"; //komplett weg
+
 	}
 	sterben(n) { //wird über Hinderniss Kollision aufgerufem
 		let a = this.ball[n].steuerung; //Zuordnung
@@ -288,16 +208,16 @@ class Game {
 		specialmenu.classList.remove("specialmenu-fadeIn");
 		textHighScore.classList.remove("textHighScore-bottom");
 	}
-	startMöglichkeitenFestlegen() {
-		this.startMöglichkeiten.splice(0, this.startMöglichkeiten.length);
-		var a = 150;
-		for (var i = 0; i < canvas.width; i++) {
-			this.startMöglichkeiten.push(new Position(i,0-a));
-			this.startMöglichkeiten.push(new Position(i,canvas.height+0.5*a));
+	startMoeglichkeitenFestlegen() {
+		this.startMoeglichkeiten.splice(0, this.startMoeglichkeiten.length);
+		let a = 150;
+		for (let i = 0; i < canvas.width; i++) {
+			this.startMoeglichkeiten.push(new Position(i,0-a));
+			this.startMoeglichkeiten.push(new Position(i,canvas.height+0.5*a));
 		}
-		for (var i = 0; i < canvas.height; i++) {
-			this.startMöglichkeiten.push(new Position(0-a,i));
-			this.startMöglichkeiten.push(new Position(canvas.width+0.5*a,i));
+		for (let i = 0; i < canvas.height; i++) {
+			this.startMoeglichkeiten.push(new Position(0-a,i));
+			this.startMoeglichkeiten.push(new Position(canvas.width+0.5*a,i));
 		}
 	}
 	hindernisseErstellen() { //wird über hindernissZeit getiment
@@ -306,15 +226,15 @@ class Game {
 	loop() {
 		ctx.clearRect(0, 0, canvas.width, canvas.height);
 
-		for (var i = 0; i < this.ball.length; i++) {
+		for (let i = 0; i < this.ball.length; i++) {
 			this.ball[i].collisionBall(i);
 		}
-		for (var i = 0; i < this.ball.length; i++) {
+		for (let i = 0; i < this.ball.length; i++) {
 			this.ball[i].bewegen();
 			this.ball[i].collisionRand();
 			this.ball[i].malen();
 		}
-		for (var i = 0; i < this.hindernisse.length; i++) {
+		for (let i = 0; i < this.hindernisse.length; i++) {
 			this.hindernisse[i].bewegen();
 			this.hindernisse[i].malen();
 			this.hindernisse[i].zaehlenFuerLoeschen();
@@ -362,12 +282,10 @@ class PunktZahl {
 			this.rendern();
 		}
 		rendern() {
-			let p = Math.round(this.points);
-			pointsSpan.innerText = p; //innerText oder textContent (für reinen Text) - innerHTML .. brauche ich hier nicht
+			pointsSpan.innerText = Math.round(this.points); //innerText oder textContent (für reinen Text) - innerHTML .. brauche ich hier nicht
 		}
 		highScoreRendern() {
-			let h = Math.round(this.highScore);
-			highScoreSpan.innerText = h;
+			highScoreSpan.innerText = Math.round(this.highScore);
 		}
 	}
 
@@ -379,9 +297,6 @@ class HindernissZeit {
 		this.zahl = 60;
 
 		this.wert = 0;
-		if (proMode === true) {
-			this.zahl = 7;
-		}
 	}
 	zaehlen() { //wird 60x die Sekunde aufgerufen
 		this.timer += 1;
@@ -404,23 +319,19 @@ class HindernissZeit {
 	}
 }
 
-/* ---------------------------- Sound ------------------------------- */
-
-// var context = new (window.AudioContext || window.webkitAudioContext)();
-
 /* ---------------------------- Hindernisse ------------------------------- */
 
 class Hindernisse {
 	constructor() {
 		let a = this.zufallPosition();
-		this.position = new Position(game.startMöglichkeiten[a].x, game.startMöglichkeiten[a].y);
+		this.position = new Position(game.startMoeglichkeiten[a].x, game.startMoeglichkeiten[a].y);
 		this.size = this.sizeFestlegen();
 		this.geschwindigkeit = getRandomArbitrary(1,4);
 		this.richtung = this.richtungFestlegen();
 		this.zaehler = 0;
 		this.loeschwert = 6000/this.geschwindigkeit;
 		this.kannLoeschen = false;
-		this.color = "rgb(51,51,51)";
+		this.color = "rgb(255,131,0)";
 	}
 	zaehlenFuerLoeschen() {
 		this.zaehler += 1;
@@ -455,25 +366,23 @@ class Hindernisse {
 		}
 	}
 	zufallPosition() {
-		return getRandomInt(0, game.startMöglichkeiten.length - 1);
+		return getRandomInt(0, game.startMoeglichkeiten.length - 1);
 	}
 	sizeFestlegen() {
 		let a = getRandomInt(1,2);
 		switch (a) {
 			case 1 :
 				return new Size(getRandomInt(40, 120),getRandomInt(12, 40));
-			break;
 			case 2 :
 				return new Size(getRandomInt(12, 40),getRandomInt(40, 120));
 		}
 	}
 	richtungFestlegen() {
-		var a = 50;
-		var x = getRandomInt(0 + a, canvas.width - a);
-		var y = getRandomInt(0 + a, canvas.height - a);
+		let a = 50;
+		var x = getRandomInt(a, canvas.width - a);
+		var y = getRandomInt(a, canvas.height - a);
 		var position2 = new Position(x,y)
-		var angle = winkelBerechnen(this.position, position2);
-		return angle;
+		return winkelBerechnen(this.position, position2);
 	}
 	bewegen() {
 		this.position.x += this.geschwindigkeit * Math.cos(this.richtung);
@@ -520,33 +429,6 @@ class Ball {
 				this.aktuelleGeschwindigkeit = abstand/b;
 			}
 		}
-
-		if (this.steuerung > 0) { //Pfeiltasten
-			if (this.steuerung === 1) {
-				var up = upPressed;
-				var down = downPressed;
-				var right = rightPressed;
-				var left = leftPressed;
-			}
-			if (this.steuerung === 2) {
-				var up = wPressed;
-				var down = sPressed;
-				var right = dPressed;
-				var left = aPressed;
-			}
-			if (up && this.aktuelleGeschwindigkeit <= this.geschwindigkeit) {
-				this.aktuelleGeschwindigkeit += 0.2;
-			}
-			if (down  && this.aktuelleGeschwindigkeit >= 0) {
-				this.aktuelleGeschwindigkeit -= 0.2;
-			}
-			if (right) {
-				this.angle += 0.08;
-			}
-			if (left) {
-				this.angle -= 0.08;
-			}
-		}
 		
 		if (this.collision) {
 			this.position.x -= this.abstoss * Math.cos(this.angleH);
@@ -568,19 +450,19 @@ class Ball {
 			this.position.x = canvas.width - this.radius;
 		}
 		if (this.position.x - this.radius <= 0) {
-			this.position.x = 0 + this.radius;
+			this.position.x = this.radius;
 		}
 		if (this.position.y + this.radius >= canvas.height) {
 			this.position.y = canvas.height - this.radius;
 		}
 		if (this.position.y - this.radius <= 0) {
-			this.position.y = 0 + this.radius;
+			this.position.y = this.radius;
 		}
 	}
 
 	collisionBall(n) {
 		for (var i = 0; i < game.ball.length; i++) {
-			if (i != n) { //dadurch nicht mit sich selbst
+			if (i !== n) { //dadurch nicht mit sich selbst
 				if (abstandBerechnen(this.position, game.ball[i].position) <= this.radius*2) {
 					this.collision = true;
 					this.angleH = winkelBerechnen(this.position, game.ball[i].position);
@@ -622,7 +504,7 @@ class Ball {
 
 /* ---------------------------- Erstellen ------------------------------- */
 
-var game = new Game();
+var game = new MainGameJS();
 game.laden();
 
 /* ---------------------------- Event Listener ------------------------------- */
@@ -632,12 +514,8 @@ window.addEventListener("resize", resizeCanvas, false);
 document.addEventListener("mousemove", setMousePosition, false);
 document.addEventListener("mousedown", mouseDown, false);
 document.addEventListener("mouseup", mouseUp, false);
-document.addEventListener("keydown", keyDownHandler, false);
-document.addEventListener("keyup", keyUpHandler, false);
 
 button1.addEventListener("mousedown", () => {game.start(1, "mainM")}, false);
-button2.addEventListener("mousedown", () => {game.start(2, "mainM")}, false);
-button3.addEventListener("mousedown", () => {game.start(3, "mainM")}, false);
 
 buttonBack.addEventListener("click", () => {game.back()}, false);
 gameovermenu.addEventListener("click", () => {game.neuStart()}, false);

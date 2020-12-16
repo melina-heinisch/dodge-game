@@ -1,16 +1,26 @@
-@import url('https://fonts.googleapis.com/css?family=Roboto:100,300,400,500');
+@import url('https://fonts.googleapis.com/css2?family=Montserrat:wght@200;400&family=Nova+Mono&family=Share+Tech+Mono&display=swap');
 * {
 	padding: 0; margin: 0;
 }
 body {
-	background-color: #eee;
-	font-family: 'Roboto', sans-serif;
-	cursor: url(cursor.png) 18 18, auto;
+	background-image: url("galaxy_background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
+	font-family: 'Montserrat', sans-serif;
+	cursor: url(rocket.png) 18 18, auto;
 	overflow: hidden;
 	user-select: none;
 }
 canvas {
-	background: #eee;
+	background-image: url("galaxy_background.jpg");
+	background-repeat: no-repeat;
+	background-size: cover;
+	background-attachment: fixed;
+	-webkit-background-size: cover;
+	-moz-background-size: cover;
 	display: block;
 	margin: 0 auto;
 }
@@ -66,18 +76,6 @@ canvas {
 	visibility: visible;
 }
 
-.specialmenu {
-	display: block;
-	opacity: 0;
-	visibility: hidden;
-	transition: all 0.6s ease-out;
-}
-
-.specialmenu-fadeIn {
-	opacity: 1;
-	visibility: visible;
-}
-
 /* ---------------------------- Button Reihe ---------------------------- */
 
 .button-row {
@@ -94,26 +92,31 @@ canvas {
 /* ---------------------------- Button Elemente ---------------------------- */
 
 .button-row div {
+	color: white;
+	font-family: 'Montserrat', sans-serif;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px;
+	text-align: center;
+	inline-size: auto;
+	padding: 0 20px 0 20px;
+	box-shadow: 5px 5px 10px slategray;
+
 	display: flex;
 	justify-content: center;
 	align-items: center;
 	width: 200px;
 	height: 60px;
-	background-color: #0095DD;
+	background-color: #ff8300;
 	margin: 0px 20px;
-	box-shadow: 0px 0px 4px 4px #0095DD;
-	border-radius: 1px;
 	transition: all 0.6s ease-out;
 }
-.button-row div p {
-	color: #fff;
-	font-size: 30px;
+.button-row div:hover{
+	background-color: #db6400;
 }
-
-.button-row div:hover {
-	background-color: #4682b4;
-	box-shadow: 0px 0px 4px 4px #4682b4;
-	transform: scale(1.1);
+.button-row div p {
+	color: white;
+	font-size: 30px;
 }
 
 /* ---------------------------- InGame winns ---------------------------- */
@@ -172,26 +175,12 @@ canvas {
 /* ---------------------------- Logo ---------------------------- */
 
 #logo {
-	width: 220px;
-	height: 220px;
 	position: absolute;
-	top: 12%;
+	top: 0;
 	left: 0;
 	right: 0;
 	margin: auto;
-	animation: drehung 22s linear infinite;
-	/*transform-origin: 50% 50%;*/
 }
-
-@keyframes drehung {
-	0% {
-		transform: rotate(0);
-	}
-	100% {
-		transform: rotate(360deg);
-	}
-}
-
 /* ---------------------------- Game Over Back Button ---------------------------- */
 
 .buttonBack {
@@ -200,22 +189,30 @@ canvas {
 	align-items: center;
 	width: 80px;
 	height: 42px;
-	background-color: #0095DD;
+	background-color: #FF8300;
 	margin: 20px 20px;
-	border-radius: 2px;
 	position: absolute;
 	top: 0%;
-	transition: all 0.6s ease-out;
+
+	color: white;
+	font-family: 'Montserrat', sans-serif;
+	border: none;
+	cursor: pointer;
+	border-radius: 8px;
+	text-align: center;
+	inline-size: auto;
+	padding: 0 20px 0 20px;
+	box-shadow: 5px 5px 10px slategray;
 }
 
 .buttonBack p {
-	color: #fff;
+	color: white;
 	font-size: 20px;
 	font-weight: 400;
 }
 
 .buttonBack:hover {
-	background-color: #4682b4;
+	background-color: #db6400;
 	transform: scale(1.1);
 }
 
@@ -234,30 +231,21 @@ canvas {
 	top: 42%;
 	font-size: 50px;
 	font-weight: 500;
-	color: rgb(0, 149, 221);
-}
-.text1:hover {
-	font-size: 54px;
+	color: white;
 }
 
 .text2 {
 	top: 52%;
 	font-size: 30px;
 	font-weight: 300;
-	color: rgb(68, 68, 68);
-}
-.text2:hover {
-	font-size: 34px;
+	color: white;
 }
 
 .text3 {
 	top: 78%;
 	font-size: 32px;
 	font-weight: 100;
-	color: rgb(51, 51, 51);
-}
-.text3:hover {
-	font-size: 34px;
+	color: white;
 }
 
 /* ---------------------------- HighScore & Winner - Game Over ---------------------------- */
@@ -266,7 +254,7 @@ canvas {
 	top: 17%;
 	font-size: 36px;
 	font-weight: 500;
-	color: #555;
+	color: white;
 	opacity: 0;
 	visibility: hidden;
 }
@@ -304,7 +292,7 @@ canvas {
 }
 
 .punktzahlDiv p {
-	color: rgb(51, 51, 51);
+	color: white;
 	text-align: right;
 }
 
