@@ -19,7 +19,6 @@ const winnsSpan = [selectID("winnsSpan1"), selectID("winnsSpan2"), selectID("win
 const textHighScore = selectID("textHighScore");
 const textNewWinner = selectID("textNewWinner");
 const textNewWinnerSpan = selectID("textNewWinnerSpan");
-const multiplayerDiv = selectID("multiplayerDiv");
 const playerAnzeige = [selectID("player1")];
 
 
@@ -91,9 +90,9 @@ function mouseUp() {
 }
 
 
-/* ---------------------------- MainGameJS ------------------------------- */
+/* ---------------------------- Game ------------------------------- */
 
-class MainGameJS {
+class Game {
 
 	constructor() {
 		this.ball = []; //Startposition, Geschwindigkeit, ... - wird immer zurückgesetzt
@@ -148,8 +147,6 @@ class MainGameJS {
 		for (let i = 0; i < playerAnzeige.length; i++) {
 			playerAnzeige[i].style.display = "none" //zurücksetzen
 		}
-
-		multiplayerDiv.style.display = "none"; //komplett weg
 
 	}
 	sterben(n) { //wird über Hinderniss Kollision aufgerufem
@@ -372,9 +369,9 @@ class Hindernisse {
 		let a = getRandomInt(1,2);
 		switch (a) {
 			case 1 :
-				return new Size(getRandomInt(40, 120),getRandomInt(12, 40));
+				return new Size(getRandomInt(40, 120),getRandomInt(40, 120));
 			case 2 :
-				return new Size(getRandomInt(12, 40),getRandomInt(40, 120));
+				return new Size(getRandomInt(40, 120),getRandomInt(40, 120));
 		}
 	}
 	richtungFestlegen() {
@@ -389,10 +386,10 @@ class Hindernisse {
 		this.position.y += this.geschwindigkeit * Math.sin(this.richtung);
 	}
 	malen() {
+		var asteroid = new Image();
+		asteroid.src = "asteroid.png";
 		ctx.beginPath();
-		ctx.fillStyle = this.color;
-		ctx.rect(this.position.x, this.position.y, this.size.w, this.size.h);
-		ctx.fill();
+		ctx.drawImage(asteroid,this.position.x, this.position.y, this.size.w, this.size.h);
 		ctx.closePath();
 	}
 }
@@ -486,25 +483,17 @@ class Ball {
 	malen() {
 		var p1 = this.position.x;
 		var p2 = this.position.y;
-
+		var imgRocket = new Image();
+		imgRocket.src = "rocket.png";
 		ctx.beginPath();
-		ctx.arc(p1, p2, this.radius, 0, Math.PI*2);
-		ctx.fillStyle = this.farbe;
-		ctx.fill();
-		ctx.closePath();
-
-		ctx.beginPath();
-		ctx.arc(p1 + 14.5 * Math.cos(this.angle), p2 + 14.5 * Math.sin(this.angle), 14, 0, Math.PI*2);
-		ctx.strokeStyle = "#000000";
-		ctx.lineWidth = 3;
-		ctx.stroke();
+		ctx.drawImage(imgRocket,p1,p2,100,100);
 		ctx.closePath();
 	}
 }
 
 /* ---------------------------- Erstellen ------------------------------- */
 
-var game = new MainGameJS();
+var game = new Game();
 game.laden();
 
 /* ---------------------------- Event Listener ------------------------------- */
