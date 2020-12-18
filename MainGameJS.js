@@ -20,7 +20,7 @@ const textHighScore = selectID("textHighScore");
 const textNewWinner = selectID("textNewWinner");
 const textNewWinnerSpan = selectID("textNewWinnerSpan");
 const multiplayerDiv = selectID("multiplayerDiv");
-const playerAnzeige = [selectID("player1"), selectID("player2"), selectID("player3")];
+const playerAnzeige = [selectID("player1")];
 
 
 /* ---------------------------- Vollbild etc. ------------------------------- */
@@ -99,7 +99,7 @@ class MainGameJS {
 		this.ball = []; //Startposition, Geschwindigkeit, ... - wird immer zurückgesetzt
 		this.ballMitSpeicher = []; //Eigenschaften, die nicht gelöscht werden - extra Objekt
 		this.hindernisse = [];
-		this.farbpalette = ["#24BCFF", "#4FDE36", "#FFE200"];
+		this.farbpalette = ["#D024FF", "#4FDE36", "#FFE200"];
 		this.startpunkte = [0.3, 0.7, 0.5];
 		this.startMoeglichkeiten = [];
 		this.hindernissZeit = new HindernissZeit();
@@ -495,7 +495,7 @@ class Ball {
 
 		ctx.beginPath();
 		ctx.arc(p1 + 14.5 * Math.cos(this.angle), p2 + 14.5 * Math.sin(this.angle), 14, 0, Math.PI*2);
-		ctx.strokeStyle = "#666";
+		ctx.strokeStyle = "#000000";
 		ctx.lineWidth = 3;
 		ctx.stroke();
 		ctx.closePath();

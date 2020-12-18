@@ -10,7 +10,7 @@ body {
 	-webkit-background-size: cover;
 	-moz-background-size: cover;
 	font-family: 'Montserrat', sans-serif;
-	cursor: url(rocket.png) 18 18, auto;
+	cursor: url(rocketSVG.svg) 18 18, auto;
 	overflow: hidden;
 	user-select: none;
 }
@@ -181,8 +181,8 @@ canvas {
 	right: 0;
 	margin: auto;
 }
-/* ---------------------------- Game Over Back Button ---------------------------- */
 
+/* ---------------------------- Game Over Back Button ---------------------------- */
 .buttonBack {
 	display: flex;
 	justify-content: center;
@@ -190,9 +190,13 @@ canvas {
 	width: 80px;
 	height: 42px;
 	background-color: #FF8300;
-	margin: 20px 20px;
 	position: absolute;
 	top: 0%;
+	margin: 20px 20px;
+
+	border-radius: 2px;
+
+	transition: all 0.6s ease-out;
 
 	color: white;
 	font-family: 'Montserrat', sans-serif;
