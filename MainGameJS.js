@@ -399,8 +399,7 @@ class Hindernisse {
 class Ball {
 	constructor(x,y,f,s) {
 		this.position = new Position(x*canvas.width,y*canvas.height);
-		this.farbe = f;
-		this.radius = 30;
+		this.radius = 70;
 		this.geschwindigkeit = 6;
 		this.angle = -0.2*Math.PI;
 		this.aktuelleGeschwindigkeit = this.geschwindigkeit;
@@ -481,12 +480,12 @@ class Ball {
 	}
 
 	malen() {
-		var p1 = this.position.x;
-		var p2 = this.position.y;
+		var p1 = this.position.x * 0.94;
+		var p2 = this.position.y * 0.94;
 		var imgRocket = new Image();
 		imgRocket.src = "rocket.png";
 		ctx.beginPath();
-		ctx.drawImage(imgRocket,p1,p2,100,100);
+		ctx.drawImage(imgRocket,p1,p2,63,100);
 		ctx.closePath();
 	}
 }
