@@ -7,7 +7,6 @@ function selectID(elem) {
 const canvas = selectID("myCanvas");
 const ctx = canvas.getContext("2d");
 const button1 = selectID("button1");
-const buttonBack = selectID("buttonBack");
 const hauptmenu = selectID("hauptmenu");
 const gameovermenu = selectID("gameovermenu");
 const specialmenu = selectID("specialmenu");
@@ -98,8 +97,8 @@ class Game {
 		this.ball = []; //Startposition, Geschwindigkeit, ... - wird immer zurückgesetzt
 		this.ballMitSpeicher = []; //Eigenschaften, die nicht gelöscht werden - extra Objekt
 		this.hindernisse = [];
-		this.farbpalette = ["#D024FF", "#4FDE36", "#FFE200"];
-		this.startpunkte = [0.3, 0.7, 0.5];
+		this.farbpalette = ["#D024FF"];
+		this.startpunkte = [0.3];
 		this.startMoeglichkeiten = [];
 		this.hindernissZeit = new HindernissZeit();
 		this.spieler = 0;
@@ -165,6 +164,10 @@ class Game {
 				this.zuruecksetzen = true;
 			}
 		}
+	}
+
+	sammeln(){
+		this.punktZahl.zaehlen();
 	}
 	gameOver() {
 		this.running = false;
@@ -247,8 +250,6 @@ class Game {
 			this.hindernissZeit.zaehlen();
 		}
 
-		this.punktZahl.zaehlen();
-
 		if (this.running) {
 			this.frame = requestAnimationFrame(() => {this.loop()});
 		}
@@ -275,14 +276,14 @@ class PunktZahl {
 			this.highScore = 0;
 		}
 		zaehlen() {
-			this.points += 16.7;
+			this.points += 1;
 			this.rendern();
 		}
 		rendern() {
-			pointsSpan.innerText = Math.round(this.points); //innerText oder textContent (für reinen Text) - innerHTML .. brauche ich hier nicht
+			pointsSpan.innerText = this.points; //innerText oder textContent (für reinen Text) - innerHTML .. brauche ich hier nicht
 		}
 		highScoreRendern() {
-			highScoreSpan.innerText = Math.round(this.highScore);
+			highScoreSpan.innerText = this.highScore;
 		}
 	}
 
@@ -328,7 +329,6 @@ class Hindernisse {
 		this.zaehler = 0;
 		this.loeschwert = 6000/this.geschwindigkeit;
 		this.kannLoeschen = false;
-		this.color = "rgb(255,131,0)";
 	}
 	zaehlenFuerLoeschen() {
 		this.zaehler += 1;
@@ -357,8 +357,14 @@ class Hindernisse {
 			let distance = abstandBerechnen(game.ball[i].position, cc);
 
 			if (distance <= game.ball[i].radius) {
-				this.kannLoeschen = true;
-				game.sterben(i);
+				if(this.type === "deadly"){
+					this.kannLoeschen = true;
+					game.sterben(i);
+				}else if(this.type === "trash"){
+					this.kannLoeschen = true;
+					game.sammeln();
+				}
+
 			}
 		}
 	}
@@ -366,12 +372,28 @@ class Hindernisse {
 		return getRandomInt(0, game.startMoeglichkeiten.length - 1);
 	}
 	sizeFestlegen() {
-		let a = getRandomInt(1,2);
+		let a = getRandomInt(1,4);
 		switch (a) {
 			case 1 :
-				return new Size(getRandomInt(40, 120),getRandomInt(40, 120));
+				this.image = "asteroid.png";
+				this.type = "deadly";
+				var size = getRandomInt(40, 120);
+				return new Size(size,size);
 			case 2 :
-				return new Size(getRandomInt(40, 120),getRandomInt(40, 120));
+				this.image = "asteroid.png";
+				this.type = "deadly";
+				var size = getRandomInt(40, 120);
+				return new Size(size,size);
+			case 3 :
+				this.image = "asteroid.png";
+				this.type = "deadly";
+				var size = getRandomInt(40, 120);
+				return new Size(size,size);
+			case 4 :
+				this.image = "trashStone.png";
+				this.type = "trash";
+				var size = getRandomInt(40, 120);
+				return new Size(size,size);
 		}
 	}
 	richtungFestlegen() {
@@ -387,7 +409,7 @@ class Hindernisse {
 	}
 	malen() {
 		var asteroid = new Image();
-		asteroid.src = "asteroid.png";
+		asteroid.src = this.image;
 		ctx.beginPath();
 		ctx.drawImage(asteroid,this.position.x, this.position.y, this.size.w, this.size.h);
 		ctx.closePath();
@@ -399,7 +421,7 @@ class Hindernisse {
 class Ball {
 	constructor(x,y,f,s) {
 		this.position = new Position(x*canvas.width,y*canvas.height);
-		this.radius = 70;
+		this.radius = 30;
 		this.geschwindigkeit = 6;
 		this.angle = -0.2*Math.PI;
 		this.aktuelleGeschwindigkeit = this.geschwindigkeit;
@@ -505,5 +527,4 @@ document.addEventListener("mouseup", mouseUp, false);
 
 button1.addEventListener("mousedown", () => {game.start(1, "mainM")}, false);
 
-buttonBack.addEventListener("click", () => {game.back()}, false);
 gameovermenu.addEventListener("click", () => {game.neuStart()}, false);
